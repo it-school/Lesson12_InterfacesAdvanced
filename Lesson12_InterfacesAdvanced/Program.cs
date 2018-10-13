@@ -8,7 +8,7 @@ namespace Interfaces
 {
     public interface IParent
     {
-        void ParentMethod();
+        void ParentMethod(params Object[] a);
     }
     public interface ISon1 : IParent
     {
@@ -20,9 +20,9 @@ namespace Interfaces
     }
     public class Pars : ISon1, ISon2
     {
-        public void ParentMethod()
+        public void ParentMethod(params Object[] a)
         {
-            Console.WriteLine("Это метод родителя!");
+            Console.WriteLine("Это метод родителя!" + a.ToString());
         }
         public void Son1Method()
         {
@@ -32,16 +32,26 @@ namespace Interfaces
         {
             Console.WriteLine("Это метод младшего сына!");
         }
-    }//class Pars
+    }
+
+    enum UI : long { Name, Family, ShortName = 5, Age, Sex }
+
 
     class Program
     {
+
         static void Main(string[] args)
         {
+            UI user1;
+            for (user1 = UI.Name; user1 <= UI.Sex; user1++)
+                Console.WriteLine("Элемент: \"{0}\", значение {1}", user1, (int)user1);
+
+            Console.ReadLine();
+
             Console.WriteLine("Объект класса вызывает методы трех интерфейсов!");
 
             Interfaces.Pars ct = new Interfaces.Pars();
-            ct.ParentMethod();
+            ct.ParentMethod("rrr");
             ct.Son1Method();
             ct.Son2Method();
             Console.WriteLine("Интерфейсный объект 1 вызывает свои методы!");
