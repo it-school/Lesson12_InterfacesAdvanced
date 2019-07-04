@@ -8,7 +8,7 @@ namespace Interfaces
 {
     public interface IParent
     {
-        void ParentMethod(params Object[] a);
+        void ParentMethod(params string[] a);
     }
     public interface ISon1 : IParent
     {
@@ -20,9 +20,14 @@ namespace Interfaces
     }
     public class Pars : ISon1, ISon2
     {
-        public void ParentMethod(params Object[] a)
+        public void ParentMethod(params string[] a)
         {
-            Console.WriteLine("Это метод родителя!" + a.ToString());
+            string s = "";
+            foreach (string item in a)
+            {
+                s += item.ToString() + " ";
+            }
+            Console.WriteLine("Это метод родителя: " + s);
         }
         public void Son1Method()
         {
@@ -34,7 +39,7 @@ namespace Interfaces
         }
     }
 
-    enum UI : long { Name, Family, ShortName = 5, Age, Sex }
+    enum UI : long { Name, Family, ShortName = 5, Age=8, Sex }
 
 
     class Program
@@ -48,26 +53,33 @@ namespace Interfaces
 
             Console.ReadLine();
 
-            Console.WriteLine("Объект класса вызывает методы трех интерфейсов!");
-
+            Console.WriteLine("Объект экземпляр класса вызывает методы трех интерфейсов:");
             Interfaces.Pars ct = new Interfaces.Pars();
-            ct.ParentMethod("rrr");
+            ct.ParentMethod("Иванов", "Иван", "Сидорович");
             ct.Son1Method();
             ct.Son2Method();
+            Console.WriteLine();
+
             Console.WriteLine("Интерфейсный объект 1 вызывает свои методы!");
-
             Interfaces.IParent ip = (IParent)ct;
-            ip.ParentMethod();
+            ip.ParentMethod("Иванов");
+            //ip.Son1Method();
+            //ip.Son2Method();
+            Console.WriteLine();
+
             Console.WriteLine("Интерфейсный объект 2 вызывает свои методы!");
-
             Interfaces.ISon1 ip1 = (ISon1)ct;
-            ip1.ParentMethod();
+            ip1.ParentMethod("Иванов", "Сергей", "Иванович");
             ip1.Son1Method();
-            Console.WriteLine("Интерфейсный объект 3 вызывает свои методы!");
+            //ip1.Son2Method();
+            Console.WriteLine();
 
+            Console.WriteLine("Интерфейсный объект 3 вызывает свои методы!");
             Interfaces.ISon2 ip2 = (ISon2)ct;
-            ip2.ParentMethod();
+            ip2.ParentMethod("Иванов", "Николай", "Иванович");
+            //ip2.Son1Method();
             ip2.Son2Method();
+            Console.WriteLine();
         }
     }
 }
